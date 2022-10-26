@@ -8,8 +8,8 @@
 
 <?php
 
-    $name = $last_name = $login = $password = "";
-    $name_err = $last_name_err = $login_err = $password_err = $image_err = "";
+    $name = $last_name = $email = $login = $password = $cpassword = "";
+    $name_err = $last_name_err = $email_err = $login_err = $password_err = $cpassword_err = $image_err = "";
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         
@@ -21,7 +21,6 @@
             $name = trim($name);
             $name = htmlspecialchars($name);
             $name = stripslashes($name);
-            $name = strtolower($name);
         }
 
         if(empty($_POST["last_name"])) {
@@ -32,7 +31,19 @@
             $last_name = trim($last_name);
             $last_name = htmlspecialchars($last_name);
             $last_name = stripslashes($last_name);
-            $last_name = strtolower($last_name);
+        }
+
+        if(empty($_POST["email"])) {
+            $email_err = "Please Enter Email";
+        } else {
+            if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+                $email = $_POST["email"];
+                $email = trim($email);
+                $email = htmlspecialchars($email);
+                $email = stripslashes($email);
+            } else {
+                $email_err = "Please Enter Valide Email Address";
+            }
         }
 
         if(empty($_POST["login"])) {
@@ -49,7 +60,6 @@
                 $login = trim($login);
                 $login = htmlspecialchars($login);
                 $login = stripslashes($login);
-                $login = strtolower($login);
             }
         }
 
@@ -67,6 +77,19 @@
             }
         }
 
+        if(empty($_POST["cpassword"])) {
+            $cpassword_err = "Please Confirm Password";
+        } else {
+            if($_POST["password"] === $_POST["cpassword"]) {
+                $cpassword = $_POST["cpassword"];
+                $cpassword = trim($cpassword);
+                $cpassword = htmlspecialchars($cpassword);
+                $cpassword = stripslashes($cpassword);
+            } else {
+                $cpassword_err = "The Password is Incorrect";
+            }
+        }
+
         if(empty($_FILES["image"]["name"])) {
             $image_err = "Please Choose an Image";
         } else {
@@ -75,16 +98,15 @@
             $image = trim($image);
             $image = htmlspecialchars($image);
             $image = stripslashes($image);
-            $image = strtolower($image);
         }
 
-        if(!empty($name) && !empty($last_name) && !empty($login) && !empty($password) && isset($image)) {
+        if(!empty($name) && !empty($last_name) && !empty($email) && !empty($login) && !empty($password) && !empty($cpassword) && isset($image)) {
 
             $result = mysqli_query($conn, "SELECT * FROM `users` WHERE `users` . `login` = '$login'");
 
             if(!mysqli_num_rows($result) > 0) {
-                $password = md5($password);
-                $result = mysqli_query($conn, "INSERT INTO `users` (`id`, `name`, `last_name`, `login`, `password`, `image`) VALUES (NULL, '$name', '$last_name', '$login', '$password', '$image')");
+                $cpassword = md5($cpassword);
+                $result = mysqli_query($conn, "INSERT INTO `users` (`id`, `name`, `last_name`, `login`, `password`, `image`) VALUES (NULL, '$name', '$last_name', '$login', '$cpassword', '$image')");
 
                 if($result) {
                     move_uploaded_file($_FILES["image"]["tmp_name"], "img/$image");
@@ -96,13 +118,6 @@
 
     }
 
-    function test($data) {
-        trim($data);
-        htmlspecialchars($data);
-        stripslashes($data);
-        strtolower($data);
-        return $data;
-    }
 ?>
 
 <!DOCTYPE html>
@@ -153,12 +168,20 @@
             <label><?=$last_name_err?></label>
         </div>
         <div>
+            <input type="email" placeholder="Email" name="email" value="<?=$email?>">
+            <label><?=$email_err?></label>
+        </div>
+        <div>
             <input type="text" placeholder="Login" name="login" value="<?=$login?>">
             <label><?=$login_err?></label>
         </div>
         <div>
             <input type="password" placeholder="Password" name="password" value="<?=$password?>">
             <label><?=$password_err?></label>
+        </div>
+        <div>
+            <input type="password" placeholder="Confirm Password" name="cpassword" value="<?=$cpassword?>">
+            <label><?=$cpassword_err?></label>
         </div>
         <div>
             <input type="file" name="image" value="<?=$image?>" accept=".jpg, .jpeg, .png, .webp">
