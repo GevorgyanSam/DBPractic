@@ -1,15 +1,15 @@
 <?php require("connection/config.php"); ?>
 
 <?php
-    if(isset($_SESSION["name"]) && isset($_SESSION["last_name"])) {
+    if(isset($_SESSION["userId"])) {
         header("Location: welcome.php");
     }
 ?>
 
 <?php
 
-    $name = $last_name = $email = $login = $password = $cpassword = "";
-    $name_err = $last_name_err = $email_err = $login_err = $password_err = $cpassword_err = $image_err = "";
+    $name = $last_name = $email = $login = $password = $cpassword = $gen = $month = $day = $year = "";
+    $name_err = $last_name_err = $email_err = $login_err = $password_err = $cpassword_err = $image_err = $gen_err = $date_err = "";
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         
@@ -100,13 +100,40 @@
             $image = stripslashes($image);
         }
 
-        if(!empty($name) && !empty($last_name) && !empty($email) && !empty($login) && !empty($password) && !empty($cpassword) && isset($image)) {
+        if(empty($_POST["gen"])) {
+            $gen_err = "Please Select Your Gender";
+        } else {
+            $gen_err = "";
+            $gen = $_POST["gen"];
+            $gen = trim($gen);
+            $gen = htmlspecialchars($gen);
+            $gen = stripslashes($gen);
+        }
+
+        if($_POST["month"] == 0 || $_POST["day"] == 0 || $_POST["year"] == 0) {
+            $date_err = "Please Select Your Birth Date";
+        } else {
+            $month = $_POST["month"];
+            $month = trim($month);
+            $month = htmlspecialchars($month);
+            $month = stripslashes($month);
+            $day = $_POST["day"];
+            $day = trim($day);
+            $day = htmlspecialchars($day);
+            $day = stripslashes($day);
+            $year = $_POST["year"];
+            $year = trim($year);
+            $year = htmlspecialchars($year);
+            $year = stripslashes($year);
+        }
+
+        if(!empty($name) && !empty($last_name) && !empty($email) && !empty($login) && !empty($password) && !empty($cpassword) && isset($image) && !empty($gen) && !empty($month) && !empty($day) && !empty($year)) {
 
             $result = mysqli_query($conn, "SELECT * FROM `users` WHERE `users` . `login` = '$login'");
 
             if(!mysqli_num_rows($result) > 0) {
                 $cpassword = md5($cpassword);
-                $result = mysqli_query($conn, "INSERT INTO `users` (`id`, `name`, `last_name`, `email`, `login`, `password`, `image`) VALUES (NULL, '$name', '$last_name', '$email', '$login', '$cpassword', '$image')");
+                $result = mysqli_query($conn, "INSERT INTO `users` (`id`, `name`, `last_name`, `email`, `login`, `password`, `image`, `gen`, `year`, `month`, `day`) VALUES (NULL, '$name', '$last_name', '$email', '$login', '$cpassword', '$image', '$gen', '$year', '$month', '$day')");
 
                 if($result) {
                     move_uploaded_file($_FILES["image"]["tmp_name"], "img/$image");
@@ -152,6 +179,12 @@
         input[name='send'] {
             margin-bottom: 25px;
         }
+
+        label[for='male'],
+        label[for='female'] {
+            margin: 0;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -186,6 +219,43 @@
         <div>
             <input type="file" name="image" value="<?=$image?>" accept=".jpg, .jpeg, .png, .webp">
             <label><?=$image_err?></label>
+        </div>
+        <div>
+            <label for="male">Male</label>
+            <input type="radio" name="gen" id="male" value="Male">
+            <label for="female">Female</label>
+            <input type="radio" name="gen" id="female" value="Female">
+            <label><?=$gen_err?></label>
+        </div>
+        <div>
+            <select name="month">
+                <option value="0">-- Month --</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+            </select>
+            <select name="day">
+                <option value="0">-- Day --</option>
+                <?php for($i = 1; $i <= 31; $i++) { ?>
+                    <option value="<?=$i?>"><?=$i?></option>
+                <?php } ?>
+            </select>
+            <select name="year">
+                <option value="0">-- Year --</option>
+                <?php for($i = 2022; $i >= 1900; $i--) { ?>
+                    <option value="<?=$i?>"><?=$i?></option>
+                <?php } ?>
+            </select>
+            <label><?=$date_err?></label>
         </div>
         <div>
             <input type="submit" name="send" value="Sign Up">

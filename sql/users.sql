@@ -15,7 +15,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- База данных: `test`
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-  `login` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 NOT NULL
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `login` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

@@ -1,7 +1,7 @@
 <?php require("connection/config.php"); ?>
 
 <?php
-    if(isset($_SESSION["name"]) && isset($_SESSION["last_name"])) {
+    if(isset($_SESSION["userId"])) {
         header("Location: welcome.php");
     }
 ?>
@@ -35,9 +35,7 @@
 
             if(mysqli_num_rows($result) > 0) {
                 $record = mysqli_fetch_assoc($result);
-                $_SESSION["name"] = $record["name"];
-                $_SESSION["last_name"] = $record["last_name"];
-                $_SESSION["login"] = $record["login"];
+                $_SESSION["userId"] = $record["id"];
                 header("Location: welcome.php");
             } else {
                 $result = mysqli_query($conn, "SELECT * FROM `users` WHERE `users` . `login` = '$login'");
