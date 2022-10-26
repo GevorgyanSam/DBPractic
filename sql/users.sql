@@ -31,9 +31,14 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `last_name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 NOT NULL,
   `login` varchar(255) CHARACTER SET utf8 NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8 NOT NULL
+  `image` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `gen` varchar(7) CHARACTER SET utf8 NOT NULL,
+  `month` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `day` int(3) NOT NULL,
+  `year` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
