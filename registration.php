@@ -106,7 +106,7 @@
 
             if(!mysqli_num_rows($result) > 0) {
                 $cpassword = md5($cpassword);
-                $result = mysqli_query($conn, "INSERT INTO `users` (`id`, `name`, `last_name`, `login`, `password`, `image`) VALUES (NULL, '$name', '$last_name', '$login', '$cpassword', '$image')");
+                $result = mysqli_query($conn, "INSERT INTO `users` (`id`, `name`, `last_name`, `email`, `login`, `password`, `image`) VALUES (NULL, '$name', '$last_name', '$email', '$login', '$cpassword', '$image')");
 
                 if($result) {
                     move_uploaded_file($_FILES["image"]["tmp_name"], "img/$image");
