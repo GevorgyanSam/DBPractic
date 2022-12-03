@@ -137,7 +137,10 @@
 
                 if($result) {
                     move_uploaded_file($_FILES["image"]["tmp_name"], "img/$image");
-                    header("Location: index.php");
+                    $result = mysqli_query($conn, "SELECT * FROM `users` WHERE `users` . `password` IN ('$cpassword')");    
+                    $record = mysqli_fetch_assoc($result);
+                    $_SESSION["userId"] = $record["id"];
+                    header("Location: welcome.php");
                 }
             }
 

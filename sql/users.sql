@@ -46,10 +46,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `last_name`, `email`, `login`, `password`, `image`, `gen`, `month`, `day`, `year`) VALUES
-(1, 'Samvel', 'Gevorgyan', 'Gevorgyan@mail.ru', 'GSam', 'd91ac493291efec9ef943999ff4297a6', 'Sam.jpg', 'Male', 'January', 18, 2005),
-(2, 'Samvel', 'Hayrapetyan', 'Hayrapetyan@mail.ru', 'Sami', '83374adc2060a1d85245bcc293f28e3d', 'Sam.jpg', 'Male', 'April', 10, 2018),
-(3, 'Stepan', 'Hovsepyan', 'Hovsepyan@gmail.com', 'Step', '4060ebec0f8c118b9c92d91966b901d8', 'Sam.jpg', 'Male', 'July', 5, 2013),
-(4, 'Harut', 'Farfaryan', 'Farfaryan@mail.ru', 'Har', 'e02dde4b4d9a1bab0ecfc27cce3b8fb0', 'Sam.jpg', 'Male', 'February', 2, 2020);
+(1, 'Samvel', 'Gevorgyan', 'Gevorgyan@mail.ru', 'GSam', 'd91ac493291efec9ef943999ff4297a6', 'Sam.jpg', 'Male', 'January', 18, 2005);
 
 --
 -- Индексы сохранённых таблиц

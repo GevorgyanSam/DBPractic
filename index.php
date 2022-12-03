@@ -31,7 +31,7 @@
 
         if(!empty($password) && !empty($login)) {
             $checkPassword = md5($password);
-            $result = mysqli_query($conn, "SELECT * FROM `users` WHERE `users` . `login` = '$login' AND `users` . `password` = '$checkPassword'");
+            $result = mysqli_query($conn, "SELECT * FROM `users` WHERE `users` . `login` IN ('$login') AND `users` . `password` IN ('$checkPassword')");
 
             if(mysqli_num_rows($result) > 0) {
                 $record = mysqli_fetch_assoc($result);
